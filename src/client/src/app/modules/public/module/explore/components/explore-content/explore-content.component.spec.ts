@@ -22,7 +22,9 @@ describe('ExploreContentComponent', () => {
   let sendSearchResult = true;
   class RouterStub {
     navigate = jasmine.createSpy('navigate');
-    url = jasmine.createSpy('url');
+    url = {
+      includes: () => {}
+    };
   }
   const resourceBundle = {
     'messages': {

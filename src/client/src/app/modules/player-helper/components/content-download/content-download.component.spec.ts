@@ -17,6 +17,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 describe('ContentDownloadComponent', () => {
   let component: ContentDownloadComponent;
   let fixture: ComponentFixture<ContentDownloadComponent>;
+  const resourceBundle = {
+    messages: {
+      fmsg: {
+        m0004: 'Fetching data failed, please try again later...'
+      },
+      stmsg: {
+        m0140: 'DOWNLOADING'
+      }
+    }
+  };
 
   const RouterStub =  {
     navigate: jasmine.createSpy('navigate')
@@ -33,7 +43,9 @@ describe('ContentDownloadComponent', () => {
       providers: [ResourceService, ConfigService, CacheService, BrowserCacheTtlService, UtilService,
         ToasterService, NavigationHelperService,
         { provide: Router, useValue: RouterStub },
-        { provide: ActivatedRoute, useValue: fakeActivatedRoute } ],
+        { provide: ActivatedRoute, useValue: fakeActivatedRoute },
+        { provide: ResourceService, useValue: resourceBundle },
+       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();

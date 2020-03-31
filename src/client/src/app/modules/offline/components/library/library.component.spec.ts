@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { response } from './library.component.spec.data';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of as observableOf, throwError } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 import { SharedModule } from '@sunbird/shared';
 import { ConnectionService } from '../../services';
 describe('LibraryComponent', () => {
@@ -26,9 +26,6 @@ describe('LibraryComponent', () => {
     messages: {
       fmsg: {
         m0004: 'Fetching data failed, please try again later...'
-      },
-      stmsg: {
-        m0140: 'DOWNLOADING'
       }
     },
     frmelmnts: {
@@ -167,14 +164,16 @@ describe('LibraryComponent', () => {
 
   it('should call fetchContents and return value', () => {
     spyOn(component, 'searchContent').and.returnValue(observableOf(response.searchResult));
+    spyOn(component, 'addHoverData');
     component.fetchContents();
     expect(component.showLoader).toBeFalsy();
+    expect(component.addHoverData).toHaveBeenCalled();
   });
 
   it('should call fetchContents and return undefined', () => {
     spyOn(component, 'searchContent').and.returnValue(observableOf(undefined));
     const toasterService = TestBed.get(ToasterService);
-    spyOn(toasterService, 'error').and.returnValue(throwError(resourceBundle.messages.fmsg.m0004));
+    spyOn(toasterService, 'error');
     component.fetchContents();
     expect(component.showLoader).toBeFalsy();
     expect(component.carouselMasterData).toEqual([]);
@@ -203,6 +202,7 @@ describe('LibraryComponent', () => {
     component.fetchContents();
     expect(component.sections[0].name).toEqual(response.testSectionName[0].name);
     });
+    fixture.destroy();
   });
 
   it('should call fetchContents and sort the sections list', () => {
@@ -212,6 +212,7 @@ describe('LibraryComponent', () => {
     component.fetchContents();
     expect(component.sections[1].name).toEqual(response.testSectionName[1].name);
     });
+    fixture.destroy();
   });
   it('should call fetchContents and sort the sections Contents list', () => {
     fixture.detectChanges();
@@ -220,5 +221,6 @@ describe('LibraryComponent', () => {
     component.fetchContents();
     expect(component.sections[1].contents[0].name).toEqual(response.testSectionName[1].contents[0].name);
     });
+    fixture.destroy();
   });
 });
