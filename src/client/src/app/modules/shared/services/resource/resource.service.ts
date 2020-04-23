@@ -81,8 +81,8 @@ export class ResourceService {
       };
       this.get(option).subscribe(
         (data: ServerResponse) => {
-          this.messages = _.merge({},  data.result.creation.messages, data.result.consumption.messages);
-          this.frmelmnts = _.merge({}, data.result.creation.frmelmnts, data.result.consumption.frmelmnts);
+          this.messages =   data.result.consumption.messages;
+          this.frmelmnts =  data.result.consumption.frmelmnts;
           this.cacheService.set('resourcebundles' + language, {
             messages: this.messages,
             frmelmnts: this.frmelmnts
