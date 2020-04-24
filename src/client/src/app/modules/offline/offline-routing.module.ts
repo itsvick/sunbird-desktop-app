@@ -24,7 +24,7 @@ const routes: Routes = [
             telemetry: {
                 env: 'search', pageid: 'search', type: 'view', subtype: 'paginate'
             },
-            softConstraints: { badgeAssertions: 98, board: 99, channel: 100 }
+            softConstraints: {  'board': 100, 'medium': 99, 'subject': 98 }
         }
     },
     {
