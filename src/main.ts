@@ -311,6 +311,39 @@ async function initLogger() {
     }
   });
 }
+
+const onMainWindowCrashed = async (err) => {
+    logger.error(err)
+    let telemetryInstance = containerAPI
+      .getTelemetrySDKInstance()
+      .getInstance();
+      telemetryInstance.error({
+        context: {
+          env: 'home'
+        },
+        edata : {
+        err: 'APP_MAIN_WINDOW_CRASHED',
+        errtype: 'DESKTOPAPP',
+        stacktrace: err.toString()
+      }
+    })
+    let userResponse = await dialog.showMessageBox(
+        {
+          title: 'App is crashed',
+          message: 'App is crashed, please click on button to Restart or close the app',
+          defaultId: 0,
+          cancelId: 1,
+          buttons: ['Restart', 'Close']
+        }
+      );
+    if(userResponse.response === 0) {
+        app.relaunch();
+        app.quit()
+    } else if (userResponse.response === 1) {
+        app.quit()
+    }
+};
+
 async function createWindow() {
   await initLogger();
   console.log('=================> initLogger env done', process.env.DATABASE_PATH);
@@ -388,6 +421,7 @@ async function createWindow() {
       win.show();
       win.maximize();
       EventManager.emit("app:initialized", {})
+      win.webContents.on('crashed', onMainWindowCrashed)
     });
     // create admin for the database
     bootstrapDependencies()
