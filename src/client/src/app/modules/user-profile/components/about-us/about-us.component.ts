@@ -97,14 +97,6 @@ export class AboutUsComponent implements OnInit, OnDestroy {
         newVersion: _.get(this.appInfo, 'updateInfo.version')
       }
     };
-    this.telemetryInteractEData = {
-      id: 'update-app-link',
-      type: 'click',
-      pageid: _.get(this.activatedRoute.snapshot.data.telemetry, 'pageid') || 'about-us',
-      extra: {
-        newVersion: _.get(this.appInfo, 'updateInfo.version')
-      }
-    };
     this.telemetryTermsOfUseEData = {
       id: 'terms-of-use',
       type: 'click',
