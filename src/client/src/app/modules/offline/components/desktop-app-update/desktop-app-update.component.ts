@@ -44,14 +44,14 @@ export class DesktopAppUpdateComponent implements OnInit, OnDestroy {
 
   setTelemetry() {
   this.telemetryInteractObject = {
-      id: 'app-update',
+      id: 'update-app-link',
       type: 'click',
       ver: <HTMLInputElement>document.getElementById('buildNumber') ?
            (<HTMLInputElement>document.getElementById('buildNumber')).value : '1.0.0'
     };
 
     this.telemetryInteractEdata =  {
-      id: 'app-update',
+      id: 'update-app-link',
       type: 'click',
       pageid: 'library',
       extra: {

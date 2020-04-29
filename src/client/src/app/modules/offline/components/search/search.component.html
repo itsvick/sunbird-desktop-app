@@ -22,11 +22,11 @@
             <p class="mt-24 text-center no-search-text">{{resourceService?.frmelmnts?.lbl?.desktop?.yourSearch | interpolate: '{key}':queryParams?.key}}
               {{resourceService?.frmelmnts?.lbl?.desktop?.notMatchContent}}
             </p>
-            <ul class="m-0">
-              <label>{{resourceService?.frmelmnts?.lbl?.desktop?.Suggestions}}:</label>
-              <li class="mb-0 ml-16">{{resourceService?.frmelmnts?.lbl?.desktop?.SuggestionsText1}}</li>
-              <li class="mb-0 ml-16">{{resourceService?.frmelmnts?.lbl?.desktop?.SuggestionsText2}}</li>
-              <li class="mb-0 ml-16 ">{{resourceService?.frmelmnts?.lbl?.desktop?.SuggestionsText3}}</li>
+            <ul class="m-0 text-left">
+              <label>{{resourceService?.frmelmnts?.lbl?.desktop?.Suggestions}}: &lrm; </label>
+              <li class="mb-0 ml-16">{{resourceService?.frmelmnts?.lbl?.desktop?.SuggestionsText1}} &lrm; </li>
+              <li class="mb-0 ml-16">{{resourceService?.frmelmnts?.lbl?.desktop?.SuggestionsText2}} &lrm; </li>
+              <li class="mb-0 ml-16 ">{{resourceService?.frmelmnts?.lbl?.desktop?.SuggestionsText3}} &lrm; </li>
             </ul>
           </div>
         </ng-container>
@@ -36,8 +36,8 @@
 
   <div class="ui container" *ngIf="!showLoader && !isContentNotAvailable">
     <section>
-      <div class="category-label fs-1">
-        <div *ngIf="downloadedContents?.length" class="d-flex pt-24 px-0">
+      <div class="category-label d-flex fs-1">
+        <div *ngIf="downloadedContents?.length" class="pt-24 px-0">
           <span
             [innerHTML]="resourceService?.frmelmnts?.lbl?.showingResultsForwithCount |
         interpolate:'{count}':downloadedContents?.length | interpolate:'{searchString}': searchKey"></span>&nbsp;
@@ -45,7 +45,7 @@
             [telemetryInteractEdata]="myDownloadsLinkInteractEdata"
             class="link">{{resourceService?.frmelmnts?.btn?.myLibrary}}</a>
         </div>
-        <div *ngIf="!downloadedContents?.length" class="d-flex pt-24 px-0">
+        <div *ngIf="!downloadedContents?.length" class="pt-24 px-0">
           <span
             [innerHTML]="resourceService?.frmelmnts?.lbl?.noResultFoundFor | interpolate: '{query}':searchKey"></span>&nbsp;
           <a [routerLink]="'/'" (click)="clearSearchQuery()" appTelemetryInteract
@@ -70,8 +70,8 @@
     <hr *ngIf="!downloadedContents?.length" class="border m-0">
 
     <section>
-      <div class="category-label fs-1">
-        <div *ngIf="onlineContents?.length" class="d-flex pt-24 px-0">
+      <div class="category-label d-flex fs-1">
+        <div *ngIf="onlineContents?.length" class="pt-24 px-0">
           <span
             [innerHTML]="resourceService.frmelmnts?.lbl?.showingResultsForwithCount |
           interpolate:'{count}':onlineContents?.length | interpolate:'{searchString}': searchKey"></span>&nbsp;
@@ -79,7 +79,7 @@
             [telemetryInteractEdata]="onlineLibraryLinkInteractEdata"
             class="link">{{resourceService?.frmelmnts?.lbl?.library}}</a>
         </div>
-        <div *ngIf="!onlineContents?.length" class="d-flex pt-24 px-0">
+        <div *ngIf="!onlineContents?.length" class="pt-24 px-0">
           <span
             [innerHTML]="resourceService?.frmelmnts?.lbl?.noResultFoundFor | interpolate: '{query}':searchKey"></span>&nbsp;
           <a [routerLink]="'/browse'" (click)="clearSearchQuery()" appTelemetryInteract

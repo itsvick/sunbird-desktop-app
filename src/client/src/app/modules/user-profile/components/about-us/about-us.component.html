@@ -1,7 +1,7 @@
 <div class="ui container" [appTelemetryImpression]="telemetryImpression">
   <div class="mt-24 sb-bg-color-white">
     <div class="sb-about-title">
-      <div class="font-weight-bold pt-16 px-16 pb-8 fmedium">{{resourceService?.frmelmnts?.lbl?.desktop?.app | interpolate:'{instance}': instance}}</div>
+      <div class="font-weight-bold pt-16 px-16 pb-8 fmedium text-left">{{resourceService?.frmelmnts?.lbl?.desktop?.app | interpolate:'{instance}': instance}}</div>
     </div>
 
     <div class="d-flex flex-ai-center p-16 flex-w-wrap">
@@ -27,7 +27,7 @@
       <!-- right container -->
       <div class="ml-auto d-flex flex-dc flex-ai-end flex-as-flex-end mt-16" *ngIf="appInfo?.updateInfo && appInfo?.updateInfo?.updateAvailable">
         <button class="sb-btn sb-btn-secondary sb-btn-normal" (click)="updateApp(appInfo?.updateInfo?.url)" appTelemetryInteract [telemetryInteractEdata]="telemetryInteractButtonEData">{{resourceService?.frmelmnts?.lbl?.desktop?.update | interpolate:'{instance}': instance}}</button>
-        <span  class="mt-8 text-right update-link" appTelemetryInteract [telemetryInteractEdata]="telemetryInteractEData">{{resourceService?.frmelmnts?.lbl?.desktop?.updateAvailable}} {{appInfo?.updateInfo?.version}}</span>
+        <span  class="mt-8 text-right update-link">{{resourceService?.frmelmnts?.lbl?.desktop?.updateAvailable}} {{appInfo?.updateInfo?.version}}</span>
       </div>
     </div>
   </div>
@@ -61,7 +61,8 @@
       <app-loader  [data]='loaderMessage'></app-loader>
     </div>
     <form class="ui form d-flex flex-jc-center">
-      <iframe id="tocIframe" #termsIframe src="/api/app/v1/terms_of_use"  (load)="isIFrameLoaded()" frameborder="0" height="850" width="100%"></iframe>
+      <iframe id="tocIframe" #termsIframe src="/api/app/v1/terms_of_use"  (load)="isIFrameLoaded()" 
+      frameborder="0" class="policy-iframe"></iframe>
     </form>
     <div>
     </div>

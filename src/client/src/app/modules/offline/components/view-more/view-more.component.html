@@ -61,10 +61,10 @@
   </div>
 
   <div class="ui container" *ngIf="!showLoader && contentList?.length">
-    <div class="category-label fs-1">
+    <div class="category-label d-flex fs-1">
       <div *ngIf="isViewAll" class="d-flex pt-24 px-0">{{resourceService?.frmelmnts?.btn?.myLibrary}}</div>
 
-      <div *ngIf="!isViewAll" class="d-flex pt-24 px-0">
+      <div *ngIf="!isViewAll" class="pt-24 px-0">
         <span [innerHTML]="resourceService?.frmelmnts?.lbl?.showingResultsForwithCount |
       interpolate:'{count}':contentList?.length | interpolate:'{searchString}':queryParams.key"></span>&nbsp;
         <a *ngIf="!isBrowse" [routerLink]="'/'" (click)="clearSearchQuery()" appTelemetryInteract

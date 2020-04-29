@@ -18,8 +18,7 @@
       .icon-close {
         position: absolute;
         right: $base-block-space;
-        top: 50%;
-        transform: translatey(-50%);
+        top: calculateRem(8px);
 
         html[dir="rtl"] & {
           left: $base-block-space;

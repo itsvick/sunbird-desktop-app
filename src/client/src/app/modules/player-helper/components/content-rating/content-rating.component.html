@@ -30,9 +30,9 @@ appBodyScroll
     <div class="options-box">
       <label class="mt-16 mb-0 options-content" *ngFor="let feedback of feedbackObj[contentRating]['options']">
         <div class="options-content-left">
-          <span [class.options-content-checked]="feedback.checked">{{feedback['value']}}</span>
+          <span [class.options-content-checked]="feedback.checked">{{feedback['value']}} &lrm;</span>
         </div>
-        <input type="checkbox" role="checkbox" [(ngModel)]="feedback.checked" (click)="changeOptions(feedback)" class="mr-10 cursor-pointer options-checkbox">
+        <input type="checkbox" role="checkbox" [(ngModel)]="feedback.checked" (click)="changeOptions(feedback)" class="mr-10 options-checkbox">
       </label>
       <div *ngIf="showTextarea" class="options-content">
         <textarea rows="5" maxlength="1000"class="textarea" [(ngModel)]="feedbackText"></textarea>
