@@ -50,6 +50,7 @@
            <!--If youtube content is playing  offline t-->
   
     </div>
+    <app-content-rating #modal *ngIf="contentRatingModal && contentData" [contentData] = "contentData" (closeModal)="contentRatingModal = false" [objectRollUp]="objectRollUp"></app-content-rating>
 
     <app-content-actions *ngIf="contentData" [contentData]="contentData" (contentDownloaded)="checkContentDownloading($event)" [objectRollUp]="objectRollUp"></app-content-actions>
 

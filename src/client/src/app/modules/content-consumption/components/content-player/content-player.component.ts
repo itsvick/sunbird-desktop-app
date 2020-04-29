@@ -212,6 +212,7 @@ export class ContentPlayerComponent implements AfterViewInit, OnChanges, OnInit,
   generateContentReadEvent(event: any) {
     const eid = event.detail.telemetryData.eid;
     if (eid && (eid === 'START' || eid === 'END')) {
+      this.showRatingPopup(event);
       this.contentProgressEvents$.next(event);
     } else if (eid && (eid === 'IMPRESSION')) {
       this.emitSceneChangeEvent();
@@ -280,6 +281,20 @@ export class ContentPlayerComponent implements AfterViewInit, OnChanges, OnInit,
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  showRatingPopup(event) {
+    let contentProgress;
+    const playerSummary: Array<any> = _.get(event, 'detail.telemetryData.edata.summary');
+    if (playerSummary) {
+      contentProgress = _.find(event.detail.telemetryData.edata.summary, 'progress');
+    }
+    if (event.detail.telemetryData.eid === 'END' && contentProgress.progress === 100) {
+      this.contentRatingModal = true;
+      if (this.modal) {
+        this.modal.showContentRatingModal = true;
+      }
+    }
   }
 }
 
