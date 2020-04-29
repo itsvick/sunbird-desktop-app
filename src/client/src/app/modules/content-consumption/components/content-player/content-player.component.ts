@@ -284,7 +284,12 @@ export class ContentPlayerComponent implements AfterViewInit, OnChanges, OnInit,
   }
 
   showRatingPopup(event) {
-    if (event.detail.telemetryData.eid === 'END') {
+    let contentProgress;
+    const playerSummary: Array<any> = _.get(event, 'detail.telemetryData.edata.summary');
+    if (playerSummary) {
+      contentProgress = _.find(event.detail.telemetryData.edata.summary, 'progress');
+    }
+    if (event.detail.telemetryData.eid === 'END' && contentProgress.progress === 100) {
       this.contentRatingModal = true;
       if (this.modal) {
         this.modal.showContentRatingModal = true;
