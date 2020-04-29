@@ -61,7 +61,8 @@
       <app-loader  [data]='loaderMessage'></app-loader>
     </div>
     <form class="ui form d-flex flex-jc-center">
-      <iframe id="tocIframe" #termsIframe src="/api/app/v1/terms_of_use"  (load)="isIFrameLoaded()" frameborder="0" height="850" width="100%"></iframe>
+      <iframe id="tocIframe" #termsIframe src="/api/app/v1/terms_of_use"  (load)="isIFrameLoaded()" 
+      frameborder="0" class="policy-iframe"></iframe>
     </form>
     <div>
     </div>
