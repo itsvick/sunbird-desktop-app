@@ -170,14 +170,17 @@ export class ContentActionsComponent implements OnInit, OnChanges {
     this.showDownloadLoader = true;
     this.contentData['downloadStatus'] = this.resourceService.messages.stmsg.m0140;
     this.contentManagerService.downloadContentId = content.identifier;
+    this.contentManagerService.downloadContentData = content;
     this.contentManagerService.failedContentName = content.name;
     this.contentManagerService.startDownload({}).subscribe(data => {
       this.contentManagerService.downloadContentId = '';
+      this.contentManagerService.downloadContentData = {};
       this.showDownloadLoader = false;
       this.contentData['downloadStatus'] = this.resourceService.messages.stmsg.m0140;
     }, (error) => {
       this.showDownloadLoader = false;
       this.contentManagerService.downloadContentId = '';
+      this.contentManagerService.downloadContentData = {};
       this.contentManagerService.failedContentName = '';
       this.contentData['downloadStatus'] = this.resourceService.messages.stmsg.m0138;
       if (!(error.error.params.err === 'LOW_DISK_SPACE')) {

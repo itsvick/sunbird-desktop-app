@@ -15,6 +15,7 @@ import { TelemetryService, IErrorEventInput } from '@sunbird/telemetry';
 export class ContentManagerService {
 
   downloadContentId: string;
+  downloadContentData: any = {};
   failedContentName: string;
   downloadEvent = new EventEmitter();
   downloadFailEvent = new EventEmitter<any>();
@@ -274,7 +275,8 @@ export class ContentManagerService {
       },
       object: {
         id: this.downloadContentId,
-        type: 'content',
+        type: this.downloadContentData.contentType,
+        ver: `${this.downloadContentData.pkgVersion}`
       },
       edata: {
         err: _.get(error, 'error.params.err'),
