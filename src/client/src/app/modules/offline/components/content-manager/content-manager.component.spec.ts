@@ -9,9 +9,9 @@ import { FileSizeModule } from 'ngx-filesize';
 import { OrderModule } from 'ngx-order-pipe';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TelemetryModule, TelemetryService, TELEMETRY_PROVIDER, IInteractEventEdata } from '@sunbird/telemetry';
-import { By } from '@angular/platform-browser';
 import { response } from './content-manager.component.spec.data';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 describe('ContentManagerComponent', () => {
@@ -32,13 +32,25 @@ describe('ContentManagerComponent', () => {
     }
   };
 
+  class FakeActivatedRoute {
+    snapshot = {
+      data: {
+        telemetry: { env: 'browse', pageid: 'browse' }
+      }
+    };
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SuiModalModule, SharedModule.forRoot(), SuiProgressModule, SuiAccordionModule, HttpClientTestingModule,
         RouterTestingModule, FileSizeModule, OrderModule, TelemetryModule],
       declarations: [ContentManagerComponent],
-      providers: [ContentManagerService, ConnectionService, TelemetryService, ToasterService, ElectronDialogService,
-        { provide: TELEMETRY_PROVIDER, useValue: EkTelemetry }, { provide: ResourceService, useValue: resourceMockData }],
+      providers: [
+        ContentManagerService, ConnectionService, TelemetryService, ToasterService, ElectronDialogService,
+        { provide: TELEMETRY_PROVIDER, useValue: EkTelemetry },
+        { provide: ResourceService, useValue: resourceMockData },
+        { provide: ActivatedRoute, useClass: FakeActivatedRoute }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
@@ -137,7 +149,7 @@ describe('ContentManagerComponent', () => {
 
   it('should call getButtonsInteractData', () => {
     const res = component.getButtonsInteractData('123', 10);
-    expect(JSON.stringify(res)).toEqual('{"id":"123","type":"click","extra":{"percentage":10}}');
+    expect(JSON.stringify(res)).toEqual('{"id":"123","type":"click","pageid":"browse","extra":{"percentage":10}}');
   });
 
   it('should call deleteLocalContentStatus', () => {
@@ -391,6 +403,13 @@ describe('ContentManagerComponent', () => {
   it('getContentStatus should return undefined', () => {
     const data = component.getContentStatus(response.contentResponse2[2].contentDownloadList);
     expect(data).toBeUndefined();
+  });
+
+  it('should call logTelemetry', () => {
+    const telemetryService = TestBed.get(TelemetryService);
+    spyOn(telemetryService, 'log');
+    component.logTelemetry(response.logInputData);
+    expect(telemetryService.log).toHaveBeenCalled();
   });
 });
 
