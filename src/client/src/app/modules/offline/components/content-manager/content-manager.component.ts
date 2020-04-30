@@ -5,6 +5,7 @@ import { switchMap, map, filter, takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash-es';
 import { ContentManagerService, ElectronDialogService } from '../../services';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ILogEventInput, TelemetryService } from '@sunbird/telemetry';
 
 @Component({
   selector: 'app-content-manager',
@@ -37,7 +38,9 @@ export class ContentManagerComponent implements OnInit, OnDestroy {
     public electronDialogService: ElectronDialogService,
     public configService: ConfigService,
     public activatedRoute: ActivatedRoute,
-    public router: Router) {
+    public router: Router,
+    private telemetryService: TelemetryService
+    ) {
     this.getList();
     document.addEventListener('content:import', (event) => {
       this.isOpen = true;
@@ -127,8 +130,14 @@ export class ContentManagerComponent implements OnInit, OnDestroy {
       content.failedCode === 'LOW_DISK_SPACE' && content.status === 'failed');
 
     if (noSpaceContentList.length) {
+      const failedContent = _.differenceBy(noSpaceContentList, this.handledFailedList, 'id');
+
+      if (failedContent[0]) {
+        this.logTelemetry(failedContent[0]);
+      }
+
       const popupInfo: any = {
-        failedContentName: _.differenceBy(noSpaceContentList, this.handledFailedList, 'id'),
+        failedContentName: failedContent,
       };
 
       try {
@@ -309,6 +318,28 @@ export class ContentManagerComponent implements OnInit, OnDestroy {
     if (this.isOpen) {
       this.apiCallSubject.next();
     }
+  }
+
+  logTelemetry(response: any) {
+    const input: ILogEventInput = {
+      context: {
+        env: _.get(this.activatedRoute, 'snapshot.root.firstChild.data.telemetry.env') ||
+        _.get(this.activatedRoute, 'snapshot.data.telemetry.env') ||
+        _.get(this.activatedRoute.snapshot.firstChild, 'children[0].data.telemetry.env')
+      },
+      object: {
+        id: response.id,
+        type: response.contentType || 'content',
+        ver: `${response.pkgVersion || ''}`
+      },
+      edata: {
+        type: 'api_call',
+        level: 'WARN',
+        message: response.failedReason
+      }
+    };
+
+    this.telemetryService.log(input);
   }
 
   ngOnDestroy() {

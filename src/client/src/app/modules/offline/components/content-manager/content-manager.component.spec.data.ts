@@ -420,6 +420,12 @@ export const response = {
       use: 15.36,
       mount: 'C:'
     }]
+  },
+  logInputData: {
+    id: 'do_23232902',
+    contentType: 'Textbook',
+    pkgVersion: 1,
+    failedReason: `Disk space is low, couldn't copy Ecar`
   }
 
 };
