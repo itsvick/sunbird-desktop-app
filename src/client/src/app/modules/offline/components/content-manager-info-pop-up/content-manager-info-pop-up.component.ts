@@ -18,9 +18,11 @@ export class ContentManagerInfoPopUpComponent implements OnInit {
   @Output() submit = new EventEmitter<any>();
 
   selectedDrive: string;
+  popupInteractEdata: IInteractEventEdata;
   constructor(public resourceService: ResourceService, public router: Router) { }
 
   ngOnInit() {
+    this.setPopupInteractEdata();
   }
 
   closeModal(selectedDrive?: string) {
@@ -43,5 +45,13 @@ export class ContentManagerInfoPopUpComponent implements OnInit {
     }
 
     return selectDriveInteractEdata;
+  }
+
+  setPopupInteractEdata() {
+    this.popupInteractEdata = {
+      id: 'low-disk-space-warning-popup-close-button',
+      type: 'click',
+      pageid: this.router.url.split('/')[1] || 'library'
+    };
   }
 }

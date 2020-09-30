@@ -37,7 +37,8 @@
   </div>
 
   <div class="sb-modal-actions">
-    <button class="sb-btn sb-btn-normal sb-btn-outline-warning" (click)="closeModal(selectedDrive)">
+    <button class="sb-btn sb-btn-normal sb-btn-outline-warning" (click)="closeModal(selectedDrive)"
+    appTelemetryInteract [telemetryInteractEdata]="popupInteractEdata">
       {{resourceService?.frmelmnts?.btn?.ok}}
     </button>
   </div>

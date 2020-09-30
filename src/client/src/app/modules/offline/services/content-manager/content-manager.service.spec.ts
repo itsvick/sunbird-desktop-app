@@ -9,7 +9,8 @@ import { ContentManagerService } from './content-manager.service';
 import { of as observableOf, throwError } from 'rxjs';
 import { SystemInfoService } from '../system-info/system-info.service';
 import { ElectronDialogService } from '../electron-dialog/electron-dialog.service';
-
+import { ActivatedRoute } from '@angular/router';
+import { TelemetryService } from '@sunbird/telemetry';
 
 describe('ContentManagerService', () => {
 
@@ -25,10 +26,21 @@ describe('ContentManagerService', () => {
       stmsg: { contentLocationChanged: 'Content location changed successfully, try to download content now.' }
     }
   };
+  class FakeActivatedRoute {
+    snapshot = {
+      data: {
+        telemetry: { env: 'browse', pageid: 'browse' }
+      }
+    };
+  }
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
     providers: [ConfigService, ToasterService, ContentManagerService, ElectronDialogService,
-      PublicDataService, CacheService, BrowserCacheTtlService, { provide: ResourceService, useValue: resourceMockData }]
+      PublicDataService, CacheService, BrowserCacheTtlService,
+      { provide: ResourceService, useValue: resourceMockData },
+      { provide: ActivatedRoute, useClass: FakeActivatedRoute },
+      TelemetryService
+    ]
   }));
 
   it('should make getalldownloads API call', () => {
@@ -223,5 +235,13 @@ describe('ContentManagerService', () => {
     spyOn(publicDataService, 'post');
     service.changeContentLocation({});
     expect(publicDataService.post).toHaveBeenCalled();
+  });
+
+  it('should call logErrorTelemetry', () => {
+    const service: ContentManagerService = TestBed.get(ContentManagerService);
+    const telemetryService: TelemetryService = TestBed.get(TelemetryService);
+    spyOn(telemetryService, 'error');
+    service.logErrorTelemetry(response.errorTelemetryData);
+    expect(telemetryService.error).toHaveBeenCalled();
   });
 });

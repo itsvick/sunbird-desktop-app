@@ -456,17 +456,20 @@ export class LibraryComponent implements OnInit, OnDestroy {
 
     downloadContent(contentId) {
         this.contentManagerService.downloadContentId = contentId;
+        this.contentManagerService.downloadContentData = this.contentData;
         this.contentManagerService.failedContentName = this.contentName;
         this.contentManagerService.startDownload({})
             .pipe(takeUntil(this.unsubscribe$))
             .subscribe(data => {
                 this.downloadIdentifier = '';
                 this.contentManagerService.downloadContentId = '';
+                this.contentManagerService.downloadContentData = {};
                 this.contentManagerService.failedContentName = '';
                 this.showDownloadLoader = false;
             }, error => {
                 this.downloadIdentifier = '';
                 this.contentManagerService.downloadContentId = '';
+                this.contentManagerService.downloadContentData = {};
                 this.contentManagerService.failedContentName = '';
                 this.showDownloadLoader = false;
                 _.each(this.pageSections, (pageSection) => {

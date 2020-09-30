@@ -312,27 +312,15 @@ app-card[lang="ur"] {
 
 /* sb card carousel truncation issue fix */
 .sb--card.sb--card--recently-viewed {
-    .sb__ellipsis--two{
-      --max-lines:2;
-      --lh:1.25rem;
+    .sb__ellipsis--two,.sb__ellipsis--three {
+      --max-lines: 2;
       position: relative;
       max-height: calc(var(--lh) * var(--max-lines));
       overflow: hidden;
-      // display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp:2;
-      word-break: break-word;
-      display: flex;
-      padding-right: 1rem;  
+      padding-right: 0.5rem;
       html[dir="rtl"] & {
-        padding-left: 1rem;
-        padding-right: inherit;
-      }
-      &--three{
-      --max-lines:3;
-      --lh:1.25rem;
-        max-height: calc(var(--lh) * var(--max-lines));
-        -webkit-line-clamp:3;
+        padding-left: 0.5rem;
+        padding-right: 0;
       }
       &::before {
         position: absolute;
@@ -348,9 +336,9 @@ app-card[lang="ur"] {
         content: "";
         position: absolute;
         right: 0;
-        width: 1.25rem;
-        height: 1.25rem;
-        background: var(--white);
+        width: 1rem;
+        height: 1rem;
+        background:var(--white);
         html[dir="rtl"] & {
           left: 0;
           right: inherit;
@@ -358,8 +346,7 @@ app-card[lang="ur"] {
       }
     }
     .sb__ellipsis--three {
-      --max-lines:3 !important;
-      --lh:1rem !important;
-      max-height: calc(var(--lh) * var(--max-lines));
+    --max-lines:3 !important;
+    max-height: calc(var(--lh) * var(--max-lines))!important;
     }
   }

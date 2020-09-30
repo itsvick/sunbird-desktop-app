@@ -6,6 +6,8 @@ import { throwError as observableThrowError, BehaviorSubject } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
 import { SystemInfoService } from '../system-info/system-info.service';
+import { ActivatedRoute } from '@angular/router';
+import { TelemetryService, IErrorEventInput } from '@sunbird/telemetry';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ import { SystemInfoService } from '../system-info/system-info.service';
 export class ContentManagerService {
 
   downloadContentId: string;
+  downloadContentData: any = {};
   failedContentName: string;
   downloadEvent = new EventEmitter();
   downloadFailEvent = new EventEmitter<any>();
@@ -25,7 +28,9 @@ export class ContentManagerService {
   constructor(private configService: ConfigService, private publicDataService: PublicDataService,
     public toasterService: ToasterService, public resourceService: ResourceService,
     public electronDialogService: ElectronDialogService,
-    public systemInfoService: SystemInfoService
+    public systemInfoService: SystemInfoService,
+    public activatedRoute: ActivatedRoute,
+    private telemetryService: TelemetryService
   ) { }
 
   updateContentDownloadStatus(contentDownloadList) {
@@ -85,6 +90,7 @@ export class ContentManagerService {
         this.downloadEvent.emit('Download started');
       }),
       catchError(async (err: any) => {
+        this.logErrorTelemetry(err);
         /* istanbul ignore else */
         if (_.get(err, 'error.params.err') === 'LOW_DISK_SPACE') {
           const popupInfo: any = {
@@ -258,6 +264,28 @@ export class ContentManagerService {
       console.error('Error while fetching system Info', error);
       return error;
     }
+  }
+
+  logErrorTelemetry(error) {
+    const input: IErrorEventInput = {
+      context: {
+        env: _.get(this.activatedRoute, 'snapshot.root.firstChild.data.telemetry.env') ||
+        _.get(this.activatedRoute, 'snapshot.data.telemetry.env') ||
+        _.get(this.activatedRoute.snapshot.firstChild, 'children[0].data.telemetry.env')
+      },
+      object: {
+        id: this.downloadContentId,
+        type: this.downloadContentData.contentType,
+        ver: `${this.downloadContentData.pkgVersion}`
+      },
+      edata: {
+        err: _.get(error, 'error.params.err'),
+        errtype: _.get(error, 'error.responseCode'),
+        stacktrace: JSON.stringify(error)
+      }
+    };
+
+    this.telemetryService.error(input);
   }
 
 }

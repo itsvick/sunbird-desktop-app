@@ -142,5 +142,26 @@ export const response = {
          { label: 'D:', name: 'D:', isRecommended: false, isCurrentContentLocation: false },
          { label: 'E:&nbsp;&nbsp;(Recommended)', name: 'E:', isRecommended: true, isCurrentContentLocation: false }
       ]
-   }
+   },
+   errorTelemetryData: {
+      'statusText': 'Insufficient Storage',
+      'url': 'http://localhost:9000/api/content/v1/download/do_3129981407884492801158',
+      'name': 'HttpErrorResponse',
+      'message': `Http failure response for http://localhost:9000/api/content/v1/download/do_3129981407884492801158:
+       507 Insufficient Storage`,
+      'error': {
+        'id': 'api.content.download',
+        'ver': '1.0',
+        'ts': '2020-04-29T14:50:14.279Z',
+        'params': {
+          'resmsgid': '18990d42-6c34-4078-bf0e-22d6c16e8194',
+          'msgid': '7a1c5270-8de7-467f-90e6-0e1c97e24ed4',
+          'status': 'failed',
+          'err': 'LOW_DISK_SPACE',
+          'errmsg': 'Low disk space'
+        },
+        'responseCode': 'CLIENT_ERROR',
+        'result': {}
+      }
+    }
 };
