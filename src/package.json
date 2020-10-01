@@ -1,6 +1,6 @@
 {
     "name": "sunbird",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "description": "sunbird desktop app",
     "main": "main.js",
     "scripts": {
@@ -75,7 +75,7 @@
         "express": "^4.17.0",
         "fs-extra": "^8.1.0",
         "lodash": "^4.17.15",
-        "openrap-sunbirded-plugin": "0.0.79",
+        "openrap-sunbirded-plugin": "0.0.80",
         "portscanner": "^2.2.0",
         "request": "^2.88.0",
         "rxjs": "^6.2.1",
