@@ -46,7 +46,8 @@ describe('LibraryComponent', () => {
       btn: {
         download: 'Download'
       }
-    }
+    },
+    languageSelected$: observableOf({})
   };
   class FakeActivatedRoute {
     snapshot = {

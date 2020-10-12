@@ -89,7 +89,12 @@ export class LibraryComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.isBrowse = Boolean(this.router.url.includes('browse'));
-        this.infoData = { msg: this.resourceService.frmelmnts.lbl.allDownloads, linkName: this.resourceService.frmelmnts.btn.myLibrary };
+        this.resourceService.languageSelected$.pipe(takeUntil(this.unsubscribe$)).subscribe(item => {
+            this.infoData = {
+                msg: this.resourceService.frmelmnts.lbl.allDownloads,
+                linkName: this.resourceService.frmelmnts.btn.myLibrary
+            };
+        });
         this.getSelectedFilters();
         this.setTelemetryData();
         this.contentManagerService.contentDownloadStatus$.subscribe( contentDownloadStatus => {

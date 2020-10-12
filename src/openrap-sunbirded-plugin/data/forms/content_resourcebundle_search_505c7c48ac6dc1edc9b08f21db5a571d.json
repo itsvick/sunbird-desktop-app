@@ -41,6 +41,11 @@
                                 "value": "hi",
                                 "label": "हिंदी",
                                 "dir": "ltr"
+                            },
+                            {
+                                "value": "ta",
+                                "label": "தமிழ்",
+                                "dir": "ltr"
                             }
                         ],
                         "index": 1
