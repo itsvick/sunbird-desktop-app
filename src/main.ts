@@ -262,7 +262,7 @@ const startApp = async () => {
   return new Promise((resolve, reject) => {
     expressApp.listen(process.env.APPLICATION_PORT, (error: any) => {
       if (error) {
-        logger.error(error);
+        logger.error('Error while starting app', error);
         reject(error);
       } else {
         logger.info("app is started on port " + process.env.APPLICATION_PORT);
@@ -302,6 +302,7 @@ async function initLogger() {
   if(!app.isPackaged){
     logLevel = 'debug';
   }
+  process.env.LOG_LEVEL = logLevel;
   enableLogger({
     logBasePath: path.join(getFilesPath(), 'logs'),
     logLevel: logLevel,
@@ -313,7 +314,7 @@ async function initLogger() {
 }
 
 const onMainWindowCrashed = async (err) => {
-    logger.error(err)
+    logger.error('App got crashed', err)
     let telemetryInstance = containerAPI
       .getTelemetrySDKInstance()
       .getInstance();
