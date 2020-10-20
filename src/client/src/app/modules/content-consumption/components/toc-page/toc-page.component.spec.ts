@@ -42,7 +42,8 @@ describe('TocPageComponent', () => {
         interactive: 'Interactive',
         docs: 'Docs'
       }
-    }
+    },
+    languageSelected$: of({})
   };
 
   beforeEach(async(() => {

@@ -108,7 +108,17 @@ export class TocPageComponent implements OnInit, OnDestroy {
     .subscribe(x => {this.setPageExitTelemtry(); });
 
     this.contentService.contentFullScreenEvent.pipe(takeUntil(this.unsubscribe$)).subscribe(response => {
-     this.isFullScreenView = !this.isFullScreenView; }); }
+     this.isFullScreenView = !this.isFullScreenView; });
+
+    this.resourceService.languageSelected$.pipe(takeUntil(this.unsubscribe$)).subscribe(item => {
+      this.mimeTypeFilters = [
+        { text: this.resourceService.frmelmnts.btn.all, value: 'all' },
+        { text: this.resourceService.frmelmnts.btn.video, value: 'video' },
+        { text: this.resourceService.frmelmnts.btn.interactive, value: 'interactive' },
+        { text: this.resourceService.frmelmnts.btn.docs, value: 'docs' },
+      ];
+    });
+  }
 
   checkDownloadStatus(downloadListdata) {
     this.collectionData = this.playerService.updateDownloadStatus(downloadListdata, this.collectionData);
