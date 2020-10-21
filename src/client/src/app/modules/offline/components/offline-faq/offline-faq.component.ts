@@ -51,7 +51,8 @@ export class OfflineFaqComponent implements OnInit, OnDestroy {
     };
     this.publicDataService.get(requestParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe((response: ServerResponse) => {
-        this.faqData = response.result.faqs;
+        this.faqData = '';
+        setTimeout(() => { this.faqData = response.result.faqs; }, 100);
       }, (error) => {
         if (language !== 'en') { // fetch default en faqs incase of faqs not found for selected language
           this.fetchFaqs('en');
