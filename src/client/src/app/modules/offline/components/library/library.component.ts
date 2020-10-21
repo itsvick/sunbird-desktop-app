@@ -278,7 +278,9 @@ export class LibraryComponent implements OnInit, OnDestroy {
                             return; // no page section
                         }
                         this.pageSections = _.cloneDeep(this.carouselMasterData);
-                        this.addHoverData();
+                        this.resourceService.languageSelected$.pipe(takeUntil(this.unsubscribe$)).subscribe(item => {
+                            this.addHoverData();
+                        });
                     } else {
                         this.hideLoader();
                         this.carouselMasterData = [];

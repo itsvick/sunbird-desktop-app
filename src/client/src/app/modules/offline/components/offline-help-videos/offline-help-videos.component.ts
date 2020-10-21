@@ -1,17 +1,19 @@
 import { ActivatedRoute } from '@angular/router';
 import { ResourceService, ConfigService } from '@sunbird/shared';
-import { Component, OnInit, Output, EventEmitter, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { IInteractEventEdata } from '@sunbird/telemetry';
 import { DOCUMENT } from '@angular/common';
 import * as $ from 'jquery';
 import * as _ from 'lodash-es';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-offline-help-videos',
   templateUrl: './offline-help-videos.component.html',
   styleUrls: ['./offline-help-videos.component.scss']
 })
-export class OfflineHelpVideosComponent implements OnInit {
+export class OfflineHelpVideosComponent implements OnInit, OnDestroy {
 
 
 
@@ -22,6 +24,7 @@ export class OfflineHelpVideosComponent implements OnInit {
   videoContainerHeight: number;
   aspectRatioHeight: number;
   playerInfoHeight: number;
+  public unsubscribe$ = new Subject<void>();
 
   slideConfig: object;
   slideData: object;
@@ -38,34 +41,35 @@ export class OfflineHelpVideosComponent implements OnInit {
   ngOnInit() {
 
     this.slideConfig = this.configService.offlineConfig.watchVideo;
-    this.slideData = [
-      {
-        id: 'add-content-offline',
-        name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0095),
-        thumbnail: 'assets/images/play-icon.svg',
-        url: 'assets/videos/How_do_I_download_content_from_DIKSHA_Library.mp4'
-      },
-      {
-        id: 'add-content-online',
-        name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0094),
-        thumbnail: 'assets/images/play-icon.svg',
-        url: 'assets/videos/How_do_I_load_content_to_the_desktop_app.mp4'
-      },
-      {
-        id: 'copy-content',
-        name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0097),
-        thumbnail: 'assets/images/play-icon.svg',
-        url: 'assets/videos/How_do_I_copy_content_to_my_pen_drive.mp4'
-      },
-      {
-        id: 'find-content-offline',
-        name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0096),
-        thumbnail: 'assets/images/play-icon.svg',
-        url: 'assets/videos/How_do_I_play_content.mp4'
-      },
-    ];
-
-    this.activeVideoObject = this.slideData[0];
+    this.resourceService.languageSelected$.pipe(takeUntil(this.unsubscribe$)).subscribe(item => {
+      this.slideData = [
+        {
+          id: 'add-content-offline',
+          name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0095),
+          thumbnail: 'assets/images/play-icon.svg',
+          url: 'assets/videos/How_do_I_download_content_from_DIKSHA_Library.mp4'
+        },
+        {
+          id: 'add-content-online',
+          name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0094),
+          thumbnail: 'assets/images/play-icon.svg',
+          url: 'assets/videos/How_do_I_load_content_to_the_desktop_app.mp4'
+        },
+        {
+          id: 'copy-content',
+          name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0097),
+          thumbnail: 'assets/images/play-icon.svg',
+          url: 'assets/videos/How_do_I_copy_content_to_my_pen_drive.mp4'
+        },
+        {
+          id: 'find-content-offline',
+          name: this.interpolateInstance(this.resourceService.frmelmnts.instn.t0096),
+          thumbnail: 'assets/images/play-icon.svg',
+          url: 'assets/videos/How_do_I_play_content.mp4'
+        },
+      ];
+      this.activeVideoObject = this.slideData[0];
+    });
     this.setVideoHeight();
 
   }
@@ -98,5 +102,9 @@ export class OfflineHelpVideosComponent implements OnInit {
     };
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
 }

@@ -7,6 +7,7 @@ import { TelemetryModule } from '@sunbird/telemetry';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OfflineHelpVideosComponent } from './offline-help-videos.component';
+import { of } from 'rxjs';
 
 describe('OfflineHelpVideosComponent', () => {
   let component: OfflineHelpVideosComponent;
@@ -31,7 +32,8 @@ describe('OfflineHelpVideosComponent', () => {
           't0096': 'My Downloads: How do I play content?',
           't0097': 'How do I copy content to my pen drive?'
         }
-      }
+      },
+      languageSelected$: of({})
     };
     const routerStub = {
       navigateByUrl: jasmine.createSpy('navigateByUrl')
