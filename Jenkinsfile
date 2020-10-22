@@ -29,7 +29,7 @@ node() {
 
         stage('Build') {
             sh """
-            docker run -d --name offline_build -w /offline node:8.0.0 sleep infinity
+            docker run -d --name offline_build -w /offline i386/node:8.16.2-stretch sleep infinity
             docker cp . offline_build:/offline/
             docker exec offline_build bash -x build.sh
             docker cp offline_build:/offline/src.tar.gz .
