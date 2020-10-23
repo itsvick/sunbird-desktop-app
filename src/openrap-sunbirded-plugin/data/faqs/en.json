@@ -9,16 +9,16 @@
             "description": "You may have downloaded YouTube content. You can play YouTube content only when you are online. Connect the computer to the Internet try again. "
         },
         {
-            "topic": "I need to update my DIKSHA desktop app",
+            "topic": "I need to update my SUNBIRD desktop app",
             "description": "Connect your computer to the Internet and check https://diksha.gov.in/desktop/latest for the latest app version "
         },
         {
             "topic": "I do not have access to a laptop with an Internet connection, but I want to add or update content on the desktop app",
-            "description": "If you have a mobile phone, download the DIKSHA mobile app from the google playstore. \nBrowse for the content in the app. \nDownload the content from the DIKSHA library. \nCopy it on a pendrive or SD card and upload it to the DIKSHA desktop app."
+            "description": "If you have a mobile phone, download the SUNBIRD mobile app from the google playstore. \nBrowse for the content in the app. \nDownload the content from the SUNBIRD library. \nCopy it on a pendrive or SD card and upload it to the SUNBIRD desktop app."
         },
         {
             "topic": "I do not find content for a particular topic, or I find the content irrelevant",
-            "description": "Browse DIKSHA's online library to search for the content. If it is still unavailable, send your feedback about content to the State SCERT"
+            "description": "Browse SUNBIRD's online library to search for the content. If it is still unavailable, send your feedback about content to the State SCERT"
         },
         {
             "topic": "The app is very slow",
@@ -37,12 +37,12 @@
             "description": "The time taken to copy depends on the size of the content file. Some large textbooks take time to copy. We recommend that you do not stop the process in between. Doing so may lead to inconsistent files."
         },
         {
-            "topic": "My computer does not have any free space because of DIKSHA content",
+            "topic": "My computer does not have any free space because of SUNBIRD content",
             "description": "Delete downloaded content from the My Downloads tab of the app to free up space on your computer"
         },
         {
-            "topic": "Unable to install DIKSHA Desktop application on my Ubuntu system",
-            "description": "<p>To install DIKSHA Desktop application on your ubuntu system:</p>\n<p>1) Open your terminal</p>\n<p>2) Run the command cd <location> to change the directory to where the exe file is downloaded. For example, if the exe is saved in the downloads folder, then run the command cd Downloads</p>\n<p>3) Run the command sudo dpkg -i <filename></p>\n<p>On successfully running this command the application is launched </p>"
+            "topic": "Unable to install SUNBIRD Desktop application on my Ubuntu system",
+            "description": "<p>To install SUNBIRD Desktop application on your ubuntu system:</p>\n<p>1) Open your terminal</p>\n<p>2) Run the command cd <location> to change the directory to where the exe file is downloaded. For example, if the exe is saved in the downloads folder, then run the command cd Downloads</p>\n<p>3) Run the command sudo dpkg -i <filename></p>\n<p>On successfully running this command the application is launched </p>"
         }
     ],
     "constants": {
